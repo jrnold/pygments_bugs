@@ -1,0 +1,4 @@
+/examples/*.html
+*.egg-info
+/build/
+/dist/
