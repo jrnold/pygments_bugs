@@ -1,4 +1,8 @@
-""" Pygments lexer for Stan """
+""" Pygments lexer for Stan
+
+    :copyright: Copyright 2012 Jeffrey B. Arnold
+    :license: BSD, see LICENSE for details.
+"""
 from pygments.lexer import RegexLexer
 from pygments.token import *
 
