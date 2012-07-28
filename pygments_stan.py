@@ -15,6 +15,8 @@ def _regex_keywords(x):
 
 class StanLexer(RegexLexer):
     """ Pygments Lexer for STAN models """
+    # Currently pretty hackish.  A better version would make use of
+    # states for the blocks.
 
     name = 'STAN'
     aliases = ['stan']
