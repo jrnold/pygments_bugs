@@ -1,6 +1,18 @@
 from pygments.lexer import RegexLexer
 from pygments.token import *
 
+RESERVED = ('for', 'in', 'while', 'repeat', 'until', 'if',
+            'then', 'else', 'true', 'false')
+
+BLOCKS = ('data', 'transformed data', 'parameters', 'transformed parameters',
+          'model', 'generated quantities')
+
+TYPES = ('int', 'real', 'vector', 'simplex', 'ordered', 'row_vector', 'matrix',
+         'corr_matrix', 'cov_matrix')
+
+def _regex_keywords(x):
+    return r'\b(%s)\b' % r'|'.join(x)
+
 class StanLexer(RegexLexer):
     """ Pygments Lexer for STAN models """
 
@@ -11,7 +23,7 @@ class StanLexer(RegexLexer):
     tokens = {
         'root': [
             # Block identifiers
-            (r'((transformed +)?data|(transformed +)?parameters|model|generated quantities)', Keyword.Namespace), 
+            (_regex_keywords(BLOCKS), Keyword.Namespace),
             # Whitespace
             (r"\s+", Text),
             # do not use stateful comments
@@ -19,11 +31,9 @@ class StanLexer(RegexLexer):
             # Comments
             (r'(//|#).*\n', Comment.Single),
             # Reserved Words 
-            (r'\b(for|in|while|repeat|until|if|then|else|true|false)\b', Keyword.Reserved),
+            (_regex_keywords(RESERVED), Keyword.Reserved),
             # Data types
-            (r'(%s)' % r'|'.join(('int', 'real', 'vector', 'simplex', 'ordered', 'row_vector', 'matrix',
-                                 'corr_matrix', 'cov_matrix')),
-             Keyword.Type),
+            (_regex_keywords(TYPES), Keyword.Type),
             # Punctuation
             (r"[;:,\[\]{}()]", Punctuation),
             # Special names (ending in __, like lp__
@@ -31,8 +41,8 @@ class StanLexer(RegexLexer):
             # Regular variable names
             (r'\b[A-Za-z][A-Za-z0-9_]*\b', Name),
             # Real Literals
+            (r'-?[0-9]+(\.[0-9]+)?[eE]-?[0-9]+', Number.Float),
             (r'-?[0-9]*\.[0-9]*', Number.Float),
-            (r'-?[0-9][eE]-?[0-9]+', Number.Float),
             # Integer Literals
             (r'-?[0-9]+', Number.Integer),
             # Assignment operators
