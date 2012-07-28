@@ -1,3 +1,4 @@
+""" Pygments lexer for Stan """
 from pygments.lexer import RegexLexer
 from pygments.token import *
 
@@ -14,7 +15,7 @@ def _regex_keywords(x):
     return r'\b(%s)\b' % r'|'.join(x)
 
 class StanLexer(RegexLexer):
-    """ Pygments Lexer for STAN models """
+    """ Pygments Lexer for Stan models """
     # Currently pretty hackish.  A better version would make use of
     # states for the blocks.
 
