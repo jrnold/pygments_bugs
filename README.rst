@@ -1,8 +1,8 @@
-================
-Pygments Stan
-================
+==================================
+Stan Language Support for Pygments
+==================================
 
-`Pygments <http://pygments.org/>`_ support for the `STAN
+`Pygments <http://pygments.org/>`_ support for the `Stan
 <http://code.google.com/p/stan/>`_ language.
 
 
