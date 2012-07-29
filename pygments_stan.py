@@ -7,7 +7,7 @@ from pygments.lexer import RegexLexer
 from pygments.token import *
 
 RESERVED = ('for', 'in', 'while', 'repeat', 'until', 'if',
-            'then', 'else', 'true', 'false')
+            'then', 'else', 'true', 'false', 'T')
 
 BLOCKS = ('data', 'transformed data', 'parameters', 'transformed parameters',
           'model', 'generated quantities')
