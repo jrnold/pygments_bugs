@@ -29,14 +29,14 @@ class StanLexer(RegexLexer):
 
     tokens = {
         'root': [
+            # do not use stateful comments
+            (r'(?ms)/\*.*?\*/', Comment.Multiline),
+            # Comments
+            (r'(//|#).*\n', Comment.Single),
             # Block identifiers
             (_regex_keywords(BLOCKS), Keyword.Namespace),
             # Whitespace
             (r"\s+", Text),
-            # do not use stateful comments
-            (r'/\*.*?\*/', Comment.Multiline),
-            # Comments
-            (r'(//|#).*\n', Comment.Single),
             # Reserved Words 
             (_regex_keywords(RESERVED), Keyword.Reserved),
             # Data types
