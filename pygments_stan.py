@@ -52,9 +52,9 @@ class StanLexer(RegexLexer):
             (r'-?[0-9]*\.[0-9]*', Number.Float),
             # Integer Literals
             (r'-?[0-9]+', Number.Integer),
-            # Assignment operators
-            (r'(<-|~)', Keyword.Declaration),
+            # Assignment operators (use Keyword.Declaration instead?)
+            (r'(<-|~)', Operator),
             # Infix and prefix operators
-            (r"([+-]|\.?\*|\.?/|')", Operator),
+            (r"(\+|-|\.?\*|\.?/|')", Operator),
         ]
     }
