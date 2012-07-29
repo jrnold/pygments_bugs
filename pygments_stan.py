@@ -44,7 +44,7 @@ class StanLexer(RegexLexer):
             # Punctuation
             (r"[;:,\[\]{}()]", Punctuation),
             # Special names (ending in __, like lp__
-            (r'\b[A-Za-z][A-Za-z0-9_]*__\b', Keyword.Constant),
+            (r'\b[A-Za-z][A-Za-z0-9_]*__\b', Keyword.Pseudo),
             # Regular variable names
             (r'\b[A-Za-z][A-Za-z0-9_]*\b', Name),
             # Real Literals
