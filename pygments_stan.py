@@ -4,7 +4,8 @@
     :license: BSD, see LICENSE for details.
 """
 from pygments.lexer import RegexLexer, include, bygroups
-from pygments.token import *
+from pygments.token import Comment, Punctuation, Keyword, Name, \
+     Operator, Number, Text
 
 class StanLexer(RegexLexer):
     """ Pygments Lexer for Stan models """
