@@ -3,20 +3,8 @@
     :copyright: Copyright 2012 Jeffrey B. Arnold
     :license: BSD, see LICENSE for details.
 """
-from pygments.lexer import RegexLexer, include
+from pygments.lexer import RegexLexer, include, bygroups
 from pygments.token import *
-
-RESERVED = ('for', 'in', 'while', 'repeat', 'until', 'if',
-            'then', 'else', 'true', 'false', 'T')
-
-BLOCKS = ('data', 'transformed data', 'parameters', 'transformed parameters',
-          'model', 'generated quantities')
-
-TYPES = ('int', 'real', 'vector', 'simplex', 'ordered', 'row_vector', 'matrix',
-         'corr_matrix', 'cov_matrix')
-
-def _regex_keywords(x):
-    return r'\b(%s)\b' % r'|'.join(x)
 
 class StanLexer(RegexLexer):
     """ Pygments Lexer for Stan models """
@@ -26,6 +14,15 @@ class StanLexer(RegexLexer):
     name = 'STAN'
     aliases = ['stan']
     filenames = ['*.stan']
+
+    _RESERVED = ('for', 'in', 'while', 'repeat', 'until', 'if',
+                'then', 'else', 'true', 'false', 'T')
+
+    _TYPES = ('int', 'real', 'vector', 'simplex', 'ordered', 'row_vector', 'matrix',
+              'corr_matrix', 'cov_matrix')
+
+    def _regex_keywords(x):
+        return r'\b(%s)\b' % r'|'.join(x)
 
     tokens = {
         'comments' : [
@@ -37,20 +34,23 @@ class StanLexer(RegexLexer):
         'root': [
             # Comments
             include('comments'),
-            # Block identifiers
-            (_regex_keywords(BLOCKS), Keyword.Namespace),
+            # block start
             # Whitespace
             (r"\s+", Text),
-            # Block
-            (r'{', Punctuation, 'block')
+            # Block start
+            (r'(?s)(%s)(\s|\n)+({)' %
+             r'|'.join((r'data', r'transformed\s+data',
+                        r'parameters', r'transformed\s+parameters',
+                        r'model', r'generated\s+quantities')),
+             bygroups(Keyword.Namespace, Text, Punctuation), 'block')
         ],
         'block' : [
             include('comments'),
-            (r"\s+", Text),
+            (r'\s+', Text),
             # Reserved Words
-            (_regex_keywords(RESERVED), Keyword.Reserved),
+            (_regex_keywords(_RESERVED), Keyword.Reserved),
             # Data types
-            (_regex_keywords(TYPES), Keyword.Type),
+            (_regex_keywords(_TYPES), Keyword.Type),
             (r'{', Punctuation, 'block'),
             # Punctuation
             (r"[;:,\[\]()]", Punctuation),
