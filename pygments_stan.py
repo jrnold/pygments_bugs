@@ -64,7 +64,8 @@ class StanLexer(RegexLexer):
             # Integer Literals
             (r'-?[0-9]+', Number.Integer),
             # Assignment operators
-            (r'(<-|~)', Keyword.Declaration),
+            # SLexer makes these tokens Operators. 
+            (r'(<-|~)', Operator),
             # Infix and prefix operators
             (r"([+-]|\.?\*|\.?/|')", Operator),
             # Block
