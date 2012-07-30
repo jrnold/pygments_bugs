@@ -17,7 +17,7 @@ class StanLexer(RegexLexer):
     filenames = ['*.stan']
 
     _RESERVED = ('for', 'in', 'while', 'repeat', 'until', 'if',
-                'then', 'else', 'true', 'false', 'T')
+                'then', 'else', 'true', 'false')
 
     _TYPES = ('int', 'real', 'vector', 'simplex', 'ordered', 'row_vector', 'matrix',
               'corr_matrix', 'cov_matrix')
