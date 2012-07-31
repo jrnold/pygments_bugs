@@ -39,10 +39,10 @@ class StanLexer(RegexLexer):
             # Whitespace
             (r"\s+", Text),
             # Block start
-            (r'(?s)(%s)(\s|\n)+({)' %
-             r'|'.join((r'data', r'transformed\s+data',
-                        r'parameters', r'transformed\s+parameters',
-                        r'model', r'generated\s+quantities')),
+            (r'(?s)(%s)(\s+)({)' %
+             r'|'.join(('data', r'transformed\s+?data',
+                        'parameters', r'transformed\s+parameters',
+                        'model', r'generated\s+quantities')),
              bygroups(Keyword.Namespace, Text, Punctuation), 'block')
         ],
         'block' : [
@@ -52,7 +52,6 @@ class StanLexer(RegexLexer):
             (_regex_keywords(_RESERVED), Keyword.Reserved),
             # Data types
             (_regex_keywords(_TYPES), Keyword.Type),
-            (r'{', Punctuation, 'block'),
             # Punctuation
             (r"[;:,\[\]()]", Punctuation),
             # Special names ending in __, like lp__
@@ -68,7 +67,7 @@ class StanLexer(RegexLexer):
             # SLexer makes these tokens Operators. 
             (r'(<-|~)', Operator),
             # Infix and prefix operators
-            (r"([+-]|\.?\*|\.?/|')", Operator),
+            (r"(\+|-|\.?\*|\.?/|//')", Operator),
             # Block
             (r'{', Punctuation, '#push'),
             (r'}', Punctuation, '#pop'),
