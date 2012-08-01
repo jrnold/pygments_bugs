@@ -101,7 +101,7 @@ class BugsLexer(RegexLexer):
             (r'(for|in)\b', Keyword.Reserved),
             # Built-in Functions
             (r'(%s)(?=\s*\()'
-             % r'|'.join(_bugs_functions + _bugs_distributions),
+             % r'|'.join(_BUGS_FUNCTIONS + _BUGS_DISTRIBUTIONS),
              Name.Builtin),
             # Regular variable names
             (r'[A-Za-z][A-Za-z0-9_.]*', Name),
@@ -157,9 +157,9 @@ class JagsLexer(RegexLexer):
             (r'(for|in)\b', Keyword.Reserved),
             # Builtins
             # Need to use lookahead because . is a valid char
-            (r'(%s)(?=\s*\()' % r'|'.join(_jags_functions
-                                 + _jags_distributions
-                                 + _jags_other_distributions),
+            (r'(%s)(?=\s*\()' % r'|'.join(_JAGS_FUNCTIONS
+                                 + _JAGS_DISTRIBUTIONS
+                                 + _JAGS_OTHER_DISTRIBUTIONS),
              Name.Builtin),
             # Names
             include('names'),
