@@ -13,6 +13,7 @@ setup(
     install_requires = ['pygments >= 1.4'],
     # Metadata
     author = "Jeffrey B. Arnold",
+    description = "Pygments lexers for BUGS-like languages",
     license = "BSD",
     entry_points = entry_points
 )
