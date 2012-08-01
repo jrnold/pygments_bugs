@@ -223,7 +223,7 @@ class StanLexer(RegexLexer):
                   'softmax', 'trace', 'determinant', 'inverse', 'eigenvalue',
                   'eigenvalues_sym', 'cholesky', 'singular_values',
                   '(log)?normal_p', 'exponential_p', 'gamma_p', 'weibull_p']
-    _DISTRIBUTIONS = ['bernoulli', 'bernoulli_logit',
+    _DISTRIBUTIONS = ['bernoulli', 'bernoulli_logit', 'binomial',
                       'beta_binomial', 'hypergeometric', 'categorical',
                       'ordered_logistic', 'negative_binomial', 'poisson',
                       'multinomial', 'normal', 'student_t',
