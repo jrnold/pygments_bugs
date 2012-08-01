@@ -1,4 +1,4 @@
-/examples/*.html
+*.html
 *.egg-info
 /build/
 /dist/
