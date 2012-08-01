@@ -1,10 +1,14 @@
 ==================================
-Stan Language Support for Pygments
+BUGS Language Support for Pygments
 ==================================
 
-`Pygments <http://pygments.org/>`_ support for the `Stan
-<http://code.google.com/p/stan/>`_ language.
+`Pygments <http://pygments.org/>`_ support for BUGS-like languages.
 
+This module provides the following lexers for pygments
+
+- **bugs** : `WinBUGS <http://www.mrc-bsu.cam.ac.uk/bugs/winbugs/contents.shtml>`_ and `OpenBUGS <http://www.openbugs.info/w/>`_
+- **jags** : `JAGS <http://mcmc-jags.sourceforge.net/>`_
+- **stan** : `Stan <http://code.google.com/p/stan/>`_
 
 Installation and Usage
 --------------------------
