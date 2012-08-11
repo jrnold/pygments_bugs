@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """ Pygments lexer for Stan
 
     :copyright: Copyright 2012 Jeffrey B. Arnold
@@ -7,76 +8,57 @@ from pygments.lexer import RegexLexer, include, bygroups
 from pygments.token import Comment, Punctuation, Keyword, Name, \
      Operator, Number, Text
 
-_BUGS_FUNCTIONS = [
-    # Scalar functions
-    'abs', 'arccos', 'arccosh', 'arcsin', 'arcsinh', 'arctan', 'arctanh',
-    'cloglog', 'cos', 'cosh', 'cumulative', 'cut', 'density', 'deviance',
-    'equals', 'expr', 'gammap', 'ilogit', 'icloglog', 'integral', 'log',
-    'logfact', 'loggam', 'logit', 'max', 'min', 'phi', 'post.p.value',
-    'pow', 'prior.p.value', 'probit', 'replicate.post', 'replicate.prior',
-    'round', 'sin', 'sinh', 'solution', 'sqrt', 'step', 'tan', 'tanh',
-    'trunc',
-    # Vector functions 
-    'inprod', 'interp.lin', 'inverse', 'logdet', 'mean', 'eigen.vals',
-    'ode', 'prod', 'p.valueM', 'rank', 'ranked', 'replicate.postM',
-    'sd', 'sort', 'sum',
-    ## Special
-    'D', 'I', 'F', 'T', 'C']
-""" OpenBUGS built-in functions 
+from pygments.lexer import RegexLexer, bygroups, include
+from pygments.token import Comment, String, Punctuation, Keyword, Name, \
+    Operator, Number, Text
 
-From http://www.openbugs.info/Manuals/ModelSpecification.html#ContentsAII
-
-This also includes
-
-- T, C, I : Truncation and censoring. ``T`` and ``C`` are in OpenBUGS. ``I`` in WinBUGS.
-- D : ODE 
-- F : Functional http://www.openbugs.info/Examples/Functionals.html
-
-"""
-
-_BUGS_DISTRIBUTIONS = ['dbern', 'dbin', 'dcat', 'dnegbin', 'dpois',
-                       'dhyper', 'dbeta', 'dchisqr', 'ddexp', 'dexp',
-                       'dflat', 'dgamma', 'dgev', 'df', 'dggamma', 'dgpar',
-                       'dloglik', 'dlnorm', 'dlogis', 'dnorm', 'dpar',
-                       'dt', 'dunif', 'dweib', 'dmulti', 'ddirch', 'dmnorm',
-                       'dmt', 'dwish']
-# OpenBUGS Distributions
-""" OpenBUGS built-in distributions
-
-Functions From http://www.openbugs.info/Manuals/ModelSpecification.html#ContentsAI
-"""
-
-
-## JAGS
-_JAGS_FUNCTIONS = [
-    'abs', 'arccos', 'arccosh', 'arcsin', 'arcsinh', 'arctan', 'arctanh',
-    'cos', 'cosh', 'cloglog',
-    'equals', 'exp', 'icloglog', 'ifelse', 'ilogit', 'log', 'logfact',
-    'loggam', 'logit', 'phi', 'pow', 'probit', 'round', 'sin', 'sinh',
-    'sqrt', 'step', 'tan', 'tanh', 'trunc', 'inprod', 'interp.lin',
-    'logdet', 'max', 'mean', 'min', 'prod', 'sum', 'sd', 'inverse', 'rank', 'sort', 't',
-    'acos', 'acosh', 'asin', 'asinh', 'atan',
-    # Truncation/Censoring (should I include)
-    'T', 'I']
-# Distributions with density, probability and quartile functions
-_JAGS_DISTRIBUTIONS = ['[dpq]%s' % x for x in
-                       ['bern', 'beta', 'dchiqsqr', 'ddexp', 'dexp',
-                        'df', 'gamma', 'gen.gamma', 'logis', 'lnorm',
-                        'negbin', 'nchisqr', 'norm', 'par', 'pois', 'weib']]
-# Other distributions without density and probability 
-_JAGS_OTHER_DISTRIBUTIONS = [
-    'dt', 'dunif', 'dbetabin', 'dbern', 'dbin', 'dcat', 'dhyper',
-    'ddirch', 'dmnorm', 'dwish', 'dmt', 'dmulti', 'dbinom', 'dchisq',
-    'dnbinom', 'dweibull', 'ddirich']
+__all__ = ['JagsLexer', 'BugsLexer', 'StanLexer']
 
 class BugsLexer(RegexLexer):
     """ Pygments Lexer for Stan models """
-    # Currently pretty hackish.  A better version would make use of
-    # states for the blocks.
 
     name = 'BUGS'
     aliases = ['bugs', 'winbugs', 'openbugs']
     filenames = ['*.bug']
+
+    _FUNCTIONS = [
+        # Scalar functions
+        'abs', 'arccos', 'arccosh', 'arcsin', 'arcsinh', 'arctan', 'arctanh',
+        'cloglog', 'cos', 'cosh', 'cumulative', 'cut', 'density', 'deviance',
+        'equals', 'expr', 'gammap', 'ilogit', 'icloglog', 'integral', 'log',
+        'logfact', 'loggam', 'logit', 'max', 'min', 'phi', 'post.p.value',
+        'pow', 'prior.p.value', 'probit', 'replicate.post', 'replicate.prior',
+        'round', 'sin', 'sinh', 'solution', 'sqrt', 'step', 'tan', 'tanh',
+        'trunc',
+        # Vector functions 
+        'inprod', 'interp.lin', 'inverse', 'logdet', 'mean', 'eigen.vals',
+        'ode', 'prod', 'p.valueM', 'rank', 'ranked', 'replicate.postM',
+        'sd', 'sort', 'sum',
+        ## Special
+        'D', 'I', 'F', 'T', 'C']
+    """ OpenBUGS built-in functions 
+
+    From http://www.openbugs.info/Manuals/ModelSpecification.html#ContentsAII
+
+    This also includes
+
+    - T, C, I : Truncation and censoring. ``T`` and ``C`` are in OpenBUGS. ``I`` in WinBUGS.
+    - D : ODE 
+    - F : Functional http://www.openbugs.info/Examples/Functionals.html
+
+    """
+
+    _DISTRIBUTIONS = ['dbern', 'dbin', 'dcat', 'dnegbin', 'dpois',
+                           'dhyper', 'dbeta', 'dchisqr', 'ddexp', 'dexp',
+                           'dflat', 'dgamma', 'dgev', 'df', 'dggamma', 'dgpar',
+                           'dloglik', 'dlnorm', 'dlogis', 'dnorm', 'dpar',
+                           'dt', 'dunif', 'dweib', 'dmulti', 'ddirch', 'dmnorm',
+                           'dmt', 'dwish']
+    """ OpenBUGS built-in distributions
+
+    Functions From http://www.openbugs.info/Manuals/ModelSpecification.html#ContentsAI
+    """
+
 
     tokens = {
         'whitespace' : [
@@ -101,7 +83,7 @@ class BugsLexer(RegexLexer):
             (r'(for|in)\b', Keyword.Reserved),
             # Built-in Functions
             (r'(%s)(?=\s*\()'
-             % r'|'.join(_BUGS_FUNCTIONS + _BUGS_DISTRIBUTIONS),
+             % r'|'.join(_FUNCTIONS + _DISTRIBUTIONS),
              Name.Builtin),
             # Regular variable names
             (r'[A-Za-z][A-Za-z0-9_.]*', Name),
@@ -122,9 +104,31 @@ class BugsLexer(RegexLexer):
 
 class JagsLexer(RegexLexer):
     """ Pygments Lexer for JAGS """
-    name = 'jags'
+    name = 'JAGS'
     aliases = ['jags']
     filenames = ['*.jags']
+    
+    ## JAGS
+    _FUNCTIONS = [
+        'abs', 'arccos', 'arccosh', 'arcsin', 'arcsinh', 'arctan', 'arctanh',
+        'cos', 'cosh', 'cloglog',
+        'equals', 'exp', 'icloglog', 'ifelse', 'ilogit', 'log', 'logfact',
+        'loggam', 'logit', 'phi', 'pow', 'probit', 'round', 'sin', 'sinh',
+        'sqrt', 'step', 'tan', 'tanh', 'trunc', 'inprod', 'interp.lin',
+        'logdet', 'max', 'mean', 'min', 'prod', 'sum', 'sd', 'inverse', 'rank', 'sort', 't',
+        'acos', 'acosh', 'asin', 'asinh', 'atan',
+        # Truncation/Censoring (should I include)
+        'T', 'I']
+    # Distributions with density, probability and quartile functions
+    _DISTRIBUTIONS = ['[dpq]%s' % x for x in
+                           ['bern', 'beta', 'dchiqsqr', 'ddexp', 'dexp',
+                            'df', 'gamma', 'gen.gamma', 'logis', 'lnorm',
+                            'negbin', 'nchisqr', 'norm', 'par', 'pois', 'weib']]
+    # Other distributions without density and probability 
+    _OTHER_DISTRIBUTIONS = [
+        'dt', 'dunif', 'dbetabin', 'dbern', 'dbin', 'dcat', 'dhyper',
+        'ddirch', 'dmnorm', 'dwish', 'dmt', 'dmulti', 'dbinom', 'dchisq',
+        'dnbinom', 'dweibull', 'ddirich']
 
     tokens = {
         'whitespace' : [
@@ -150,59 +154,56 @@ class JagsLexer(RegexLexer):
             # Variable declaration (TODO: improve)
             (r'var\b', Keyword.Declaration, 'var')
         ],
-        'block' : [
+        'statements': [
             include('comments'),
             include('whitespace'),
             # Reserved Words
             (r'(for|in)\b', Keyword.Reserved),
             # Builtins
             # Need to use lookahead because . is a valid char
-            (r'(%s)(?=\s*\()' % r'|'.join(_JAGS_FUNCTIONS
-                                 + _JAGS_DISTRIBUTIONS
-                                 + _JAGS_OTHER_DISTRIBUTIONS),
+            (r'(%s)(?=\s*\()' % r'|'.join(_FUNCTIONS
+                                 + _DISTRIBUTIONS
+                                 + _OTHER_DISTRIBUTIONS),
              Name.Builtin),
             # Names
             include('names'),
             # Number Literals
             (r'[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?', Number),
-            (r'(\[|\]|\(|\)|:|,|;)', Punctuation),
+            (r'(\[|\]|\(|\)|:|,)', Punctuation),
             # Assignment operators
             (r'(<-|~)', Operator),
             # # JAGS includes many more than OpenBUGS
             # |/|\|\||\&\&|>=?|<=?|[=!]?=|!|%.*?%|^)'
             (r'(\+|-|\*|\/|\|\|[&]{2}|[<>=]=?|\^|%.*?%)', Operator),
-            # Block
+            ],
+        'block' : [
+            include('statements'),
+            (r';', Punctuation),
             (r'{', Punctuation, '#push'),
             (r'}', Punctuation, '#pop'),
             ],
         'var' : [
-            include('whitespace'),
-            include('names'),
-            (r'(,|\[|\])', Punctuation),
+            include('statements'),
             (r';', Punctuation, '#pop'),
             ]
         }
 
 class StanLexer(RegexLexer):
     """ Pygments Lexer for Stan models """
-    # Currently pretty hackish.  A better version would make use of
-    # states for the blocks.
-
-    name = 'STAN'
+    name = 'Stan'
     aliases = ['stan']
     filenames = ['*.stan']
 
     _RESERVED = ('for', 'in', 'while', 'repeat', 'until', 'if',
-                'then', 'else', 'true', 'false')
+                'then', 'else', 'true', 'false', 'T')
 
     _TYPES = ('int', 'real', 'vector', 'simplex', 'ordered', 'row_vector', 'matrix',
               'corr_matrix', 'cov_matrix')
 
     # STAN 1.0 Manual, Chapter 20
-    _FUNCTIONS = ['T',
-                  'abs', 'int_step', 'min', 'max',
-                  'pi', 'e', 'sqrt2', 'log2', 'log10', 'nan', 'infinity',
-                  'epsilon', 'negative_epsilon',
+    _CONSTANTS = ['pi', 'e', 'sqrt2', 'log2', 'log10', 'nan', 'infinity',
+                  'epsilon', 'negative_epsilon']
+    _FUNCTIONS = ['abs', 'int_step', 'min', 'max',
                   'if_else', 'step',
                   'fabs', 'fdim',
                   'fmin', 'fmax',
@@ -236,9 +237,6 @@ class StanLexer(RegexLexer):
                       'wishart', 'inv_wishart', 'lkj_cov',
                       'lkj_corr_cholesky']
 
-    def _regex_keywords(x):
-        return r'\b(%s)\b' % r'|'.join(x)
-
     tokens = {
         'whitespace' : [
             (r"\s+", Text),
@@ -265,9 +263,9 @@ class StanLexer(RegexLexer):
             include('comments'),
             include('whitespace'),
             # Reserved Words
-            (_regex_keywords(_RESERVED), Keyword.Reserved),
+            (r'(%s)\b' % r'|'.join(_RESERVED), Keyword.Reserved),
             # Data types
-            (_regex_keywords(_TYPES), Keyword.Type),
+            (r'(%s)\b' % r'|'.join(_TYPES), Keyword.Type),
             # Punctuation
             (r"[;:,\[\]()]", Punctuation),
             # Builtin
@@ -276,6 +274,9 @@ class StanLexer(RegexLexer):
                          + _DISTRIBUTIONS 
                          + ['%s_log' % x for x in _DISTRIBUTIONS]),
              Name.Builtin),
+            (r'(%s)(?=\s*\()'
+             % r'|'.join(_CONSTANTS),
+             Keyword.Constant),
             # Special names ending in __, like lp__
             (r'\b[A-Za-z][A-Za-z0-9_]*__\b', Name.Builtin.Pseudo),
             # Regular variable names
@@ -289,7 +290,7 @@ class StanLexer(RegexLexer):
             # SLexer makes these tokens Operators. 
             (r'(<-|~)', Operator),
             # Infix and prefix operators
-            (r"(\+|-|\.?\*|\.?/|//')", Operator),
+            (r"(\+|-|\.?\*|\.?/|\\|')", Operator),
             # Block
             (r'{', Punctuation, '#push'),
             (r'}', Punctuation, '#pop'),
