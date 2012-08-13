@@ -257,11 +257,7 @@ class StanLexer(RegexLexer):
              r'|'.join(('data', r'transformed\s+?data',
                         'parameters', r'transformed\s+parameters',
                         'model', r'generated\s+quantities')),
-             bygroups(Keyword.Namespace, Text, Punctuation), 'block')
-        ],
-        'block' : [
-            include('comments'),
-            include('whitespace'),
+             bygroups(Keyword.Namespace, Text, Punctuation)),
             # Reserved Words
             (r'(%s)\b' % r'|'.join(_RESERVED), Keyword.Reserved),
             # Data types
@@ -291,8 +287,7 @@ class StanLexer(RegexLexer):
             (r'(<-|~)', Operator),
             # Infix and prefix operators
             (r"(\+|-|\.?\*|\.?/|\\|')", Operator),
-            # Block
-            (r'{', Punctuation, '#push'),
-            (r'}', Punctuation, '#pop'),
+            # Block delimiters
+            (r'[{}]', Punctuation),
             ]
         }
